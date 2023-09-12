@@ -11,13 +11,19 @@
                         <h2>Edição de Artigos</h2>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="/articles/update">
-                            <input type="text" name="title" class="form-control"
-                                placeholder="Defina o Título do Artigo" value=""><br>
-                                <input type="hidden" value="" name="id">
-                                <textarea name="body" class="form-control" placeholder="Escreva seu artigo aqui" id="article"></textarea><br>
-                                <select name="category" class="form-control">
-                                
+                        <form method="POST" action="/admin/artigos/atualizar">
+                            <input type="text" name="titulo" class="form-control"
+                                placeholder="Defina o Título do Artigo" value="<%= artigo.titulo %>"><br>
+                                <input type="hidden" value="<%= artigo.id %>" name="id">
+                                <textarea name="conteudo" class="form-control" placeholder="Escreva seu artigo aqui" id="artigo"><%= artigo.conteudo %></textarea><br>
+                                <select name="categoria" class="form-control">
+                                    <% categorias.forEach(categoria => {%>
+                                        <% if (categoria.id == artigo.categoriaId) { %>
+                                            <option value="<%= categoria.id %>" selected><%= categoria.titulo %></option>
+                                        <% }else{ %>
+                                            <option value="<%= categoria.id %>"><%= categoria.titulo %></option>
+                                        <% } %>
+                                    <% });  %>
                                 </select><br>
                             <button class="btn btn-success">Atualizar</button>
                         </form>
@@ -28,5 +34,13 @@
     </body>
 
     <%- include('../../partials/footer.ejs') %>
+    <script src="/tinymce/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: "#artigo",
+            language: 'pt-BR'
+        })
+    </script>
 
     

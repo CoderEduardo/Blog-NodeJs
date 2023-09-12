@@ -7,7 +7,7 @@
                 <hr>
                 <h2>Artigos</h2>
                 <hr>
-                <a href="" class="btn btn-success">Criar novo Artigo</a>
+                <a href="/admin/artigos/novo" class="btn btn-success">Criar novo Artigo</a>
 
                 <table class="table table-bordered mt-3">
                     <thead>
@@ -20,34 +20,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                     
+
+                        <% artigos.forEach(artigo=> { %>
                             <tr>
                                 <td>
-                                   
+                                    <%= artigo.id %>
                                 </td>
                                 <td>
-                                   
+                                    <%= artigo.titulo %>
                                 </td>
                                 <td>
-                                   
+                                    <%= artigo.slug %>
                                 </td>
                                 <td>
-                                   
+                                    <%= artigo.categoria.titulo %>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-warning">Atualizar</a>
-                                    <form action="" method="POST" style="display: inline;"
-                                        onsubmit="">
-                                        <input type="hidden" name="id" value=">">
+                                    <a href="/admin/artigos/atualizar/<%= artigo.id %>" class="btn btn-warning">Atualizar</a>
+                                    <form action="/admin/artigos/deletar" method="POST" style="display: inline;" onsubmit="confirmarDelecao(this)">
+                                        <input type="hidden" name="id" value="<%= artigo.id %>">
                                         <button class="btn btn-danger">Deletar</button>
                                     </form>
                                 </td>
                             </tr>
-                           
+                        <% }); %>
+
                     </tbody>
                 </table>
 
             </div>
     </body>
-
-  
+    <script>
+        function confirmarDelecao(form){
+            event.preventDefault()
+            let decisao = confirm("Você realmente deseja deletar esse artigo?")
+            if(decisao){
+                form.submit()
+            }
+        }
+    </script>
