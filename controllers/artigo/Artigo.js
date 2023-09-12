@@ -18,6 +18,7 @@ const Artigo = connection.define("artigos",{
 })
 
 Artigo.belongsTo(Categoria)
+Categoria.hasMany(Artigo)
 Artigo.sync({force:false})
 
 module.exports = Artigo

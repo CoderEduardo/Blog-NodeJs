@@ -5,7 +5,11 @@ const Artigo = require("./Artigo")
 const slugify = require("slugify")
 
 router.get("/admin/artigos",(req,res)=>{
-    res.render("admin/artigos/index")
+    Artigo.findAll({
+        include:[{model:Categoria}]
+    }).then(artigos=>{
+        res.render("admin/artigos/index",{artigos:artigos})
+    })
 })
 
 router.get("/admin/artigos/novo",(req,res)=>{
