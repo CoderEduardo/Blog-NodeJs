@@ -17,16 +17,18 @@
                 <hr>
 
                
-                    <div class="card">
+                  <% artigos.forEach(artigo => {%>
+                      <div class="card">
                         <div class="card-header">
                             <h2>
-                               
+                               <%= artigo.titulo %>
                             </h2>
                         </div>
                         <div class="card-body">
-                            <a href="" class="btn btn-success">Ler Artigo</a>
+                            <a href="/<%= artigo.slug %>" class="btn btn-success">Ler Artigo</a>
                         </div>
                     </div><br>
+                  <% });  %>
                   
 
                     <div class="row" style="float: right;">

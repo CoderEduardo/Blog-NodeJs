@@ -14,7 +14,22 @@ app.use(express.static("public"))
 app.set("view engine",'ejs')
 
 app.get("/",(req,res)=>{
-    res.render("index")
+    Artigo.findAll().then(artigos=>{
+        res.render("index",{artigos:artigos})
+    })
+})
+
+app.get("/:slug",(req,res)=>{
+    let slug = req.params.slug
+    Artigo.findOne({
+        where:{slug:slug}
+    }).then(artigo =>{
+        if(artigo != undefined){
+            res.render("article",{artigo:artigo})
+        }else{
+            res.redirect("/")
+        }
+    })
 })
 
 app.use("/",categoriaController)
