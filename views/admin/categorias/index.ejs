@@ -20,18 +20,20 @@
             </thead>
             <tbody>
     
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                  <% categorias.forEach(categoria => {%>
+                      <tr>
+                        <th><%= categoria.id %></th>
+                        <th><%= categoria.titulo %></th>
+                        <th><%= categoria.slug %></th>
                         <th>
                             <a href="" class="btn btn-warning">Editar</a>
                             <form action="/categories/delete" method="POST" style="display: inline;">
-                                <input type="hidden" name="id" value="">
+                                <input type="hidden" name="id" value="<%= categoria.id %>">
                                 <button class="btn btn-danger">Deletar</button>
                             </form>
                         </th>
                     </tr>
+                  <% });  %>
 
             </tbody>
         </table>

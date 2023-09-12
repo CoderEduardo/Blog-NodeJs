@@ -4,7 +4,12 @@ const slugify = require("slugify")
 const Categoria = require("./Categoria")
 
 router.get("/admin/categorias",(req,res)=>{
-    res.render("admin/categorias/index")
+    
+    Categoria.findAll().then(categorias =>{
+        res.render("admin/categorias/index",{
+            categorias:categorias
+        })
+    })
 })
 
 router.get("/admin/categorias/nova",(req,res)=>{
