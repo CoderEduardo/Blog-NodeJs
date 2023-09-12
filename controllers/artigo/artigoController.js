@@ -36,15 +36,40 @@ router.post("/admin/artigos/salvar", (req, res) => {
 })
 
 router.post("/admin/artigos/deletar", (req, res) => {
+    let id = req.body.id
+    Artigo.destroy({
+        where: { id: id }
+    }).then(() => {
+        res.redirect("/admin/artigos")
+    })
+})
 
+router.get("/admin/artigos/atualizar/:id", (req, res) => {
+    let id = req.params.id
+
+    Artigo.findByPk(id).then(artigo => {
+        Categoria.findAll().then(categorias => {
+            res.render("admin/artigos/edit", { artigo: artigo, categorias: categorias })
+        })
+    })
+})
+
+router.post("/admin/artigos/atualizar", (req, res) => {
+    let titulo = req.body.titulo
+    let conteudo = req.body.conteudo
+    let categoria = req.body.categoria
     let id = req.body.id
 
-    Artigo.destroy({
+    Artigo.update({
+        titulo:titulo,
+        slug:slugify(titulo),
+        conteudo:conteudo,
+        categoriaId:categoria
+    },{
         where:{id:id}
     }).then(()=>{
         res.redirect("/admin/artigos")
     })
-
- })
+})
 
 module.exports = router
