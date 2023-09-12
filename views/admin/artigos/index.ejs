@@ -37,8 +37,8 @@
                                 </td>
                                 <td>
                                     <a href="" class="btn btn-warning">Atualizar</a>
-                                    <form action="" method="POST" style="display: inline;" onsubmit="">
-                                        <input type="hidden" name="id" value=">">
+                                    <form action="/admin/artigos/deletar" method="POST" style="display: inline;" onsubmit="confirmarDelecao(this)">
+                                        <input type="hidden" name="id" value="<%= artigo.id %>">
                                         <button class="btn btn-danger">Deletar</button>
                                     </form>
                                 </td>
@@ -50,3 +50,12 @@
 
             </div>
     </body>
+    <script>
+        function confirmarDelecao(form){
+            event.preventDefault()
+            let decisao = confirm("Você realmente deseja deletar esse artigo?")
+            if(decisao){
+                form.submit()
+            }
+        }
+    </script>
