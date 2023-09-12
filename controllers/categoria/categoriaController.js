@@ -36,4 +36,27 @@ router.post("/admin/categorias/deletar",(req,res)=>{
     })
 })
 
+router.get("/admin/categorias/atualizar/:id",(req,res)=>{
+    let id = req.params.id
+    Categoria.findByPk(id).then(categoria=>{
+        if(categoria != undefined && !isNaN(id)){
+            res.render("admin/categorias/edit",{
+                categoria:categoria
+            })
+        }else{
+            res.redirect("/admin/categorias")
+        }
+    })
+})
+
+router.post("/admin/categorias/atualizar",(req,res)=>{
+    let id = req.body.id
+    let titulo = req.body.titulo
+    Categoria.update({titulo:titulo,slug:slugify(titulo)},{
+        where:{id:id}
+    }).then(()=>{
+        res.redirect("/admin/categorias")
+    })
+})
+
 module.exports = router
