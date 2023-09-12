@@ -27,4 +27,13 @@ router.post("/admin/categorias/salvar",(req,res)=>{
     })
 })
 
+router.post("/admin/categorias/deletar",(req,res)=>{
+    let id = req.body.id
+    Categoria.destroy({
+        where:{id:id}
+    }).then(()=>{
+        res.redirect("/admin/categorias")
+    })
+})
+
 module.exports = router
