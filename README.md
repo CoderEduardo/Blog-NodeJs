@@ -32,6 +32,9 @@ Blog feito com NodeJs, sequelize e ejs
 
     npm install --save bcryptjs
 
+### slugify
+
+    npm install --save slugify
 ### nodemon(opcional)
 
     npm install -g nodemon
