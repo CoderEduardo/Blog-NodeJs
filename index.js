@@ -7,6 +7,7 @@ connection.authenticate().then(()=>{console.log("Banco de dados conectado com su
 const Categoria = require("./controllers/categoria/Categoria")
 const Artigo = require("./controllers/artigo/Artigo")
 const categoriaController = require("./controllers/categoria/categoriaController")
+const artigoController = require("./controllers/artigo/artigoController")
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(express.static("public"))
@@ -17,6 +18,7 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/",categoriaController)
+app.use("/",artigoController)
 
 app.listen(PORTA,()=>{
     console.log(`Servidor Rodando na porta ${PORTA}`)

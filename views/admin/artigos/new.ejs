@@ -11,16 +11,19 @@
                         <h2>Novo artigo</h2>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="">
-                            <input type="text" name="title" class="form-control"
+                        <form method="POST" action="/admin/artigos/salvar">
+                            <input type="text" name="titulo" class="form-control"
                                 placeholder="Defina o título do Artigo"><br>
-                                <textarea name="body" class="form-control" placeholder="Escreva seu artigo aqui" id="article"></textarea><br>
-                                <label>Categoria:</label>
-                                <select name="category" class="form-control">
-                                   
-                                       
-                                   
-                                </select><br>
+                            <textarea name="conteudo" class="form-control" placeholder="Escreva seu artigo aqui"
+                                id="artigo"></textarea><br>
+                            <label>Categoria:</label>
+                            <select name="categoria"class="form-control">
+
+                                <% categorias.forEach(categoria=> {%>
+                                    <option value="<%= categoria.id %>"><%= categoria.titulo %></option>
+                                <% }); %>
+
+                            </select><br>
                             <button class="btn btn-success">Cadastrar</button>
                         </form>
                     </div>
@@ -30,4 +33,11 @@
     </body>
 
     <%- include('../../partials/footer.ejs') %>
-  
+        <script src="/tinymce/tinymce.min.js"></script>
+
+        <script>
+            tinymce.init({
+                selector: "#artigo",
+                language: 'pt-BR'
+            })
+        </script>
