@@ -1,34 +1,36 @@
 # Blog-NodeJs
 Blog feito com NodeJs, sequelize e ejs
 
+É necessário para rodar o programa ter instalado em sua máquina o nodejs, que pode ser instalado a partir desse link: https://nodejs.org/en/download
+
 ### Para rodar esse site, precisamos instalar algumas bibliotecas no computador
 
-### express 
+### express:
 
-npm install --save express 
-### sequelize
+    npm install --save express 
+### sequelize:
 
-npm install --save sequelize 
+    npm install --save sequelize 
 
-### mysql2
+### mysql2:
 
-npm install --save mysql2 
+    npm install --save mysql2 
 
-### body-parser
+### body-parser:
 
-npm install --save body-parser 
+    npm install --save body-parser 
 
-### ejs
+### ejs:
 
-npm install --save ejs
+    npm install --save ejs
 
-### express-session
+### express-session:
 
-npm install --save express-session
+    npm install --save express-session
 
-### bcryptjs
+### bcryptjs:
 
-npm install --save bcryptjs
+    npm install --save bcryptjs
 
 ### Funcionamento:
 Esse site funciona da seguinte maneira, você pode entrar nele, e vizualizar artigos, escrito por diversar pessoas, com a sua conta criada e seu login feito, você consegue acessar a parte de administração, e também criar seus artigos e categorias de artigos
