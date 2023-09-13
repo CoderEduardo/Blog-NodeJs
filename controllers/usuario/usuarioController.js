@@ -10,11 +10,11 @@ router.get("/admin/usuarios", adminAuth,(req, res) => {
     })
 })
 
-router.get("/admin/usuario/novo",adminAuth, (req, res) => {
+router.get("/admin/usuario/novo",(req, res) => {
     res.render("admin/usuarios/create")
 })
 
-router.post("/admin/usuario/registrar",adminAuth, (req, res) => {
+router.post("/admin/usuario/registrar",(req, res) => {
     let email = req.body.email
     Usuario.findOne({
         where: { email: email }
@@ -55,6 +55,8 @@ router.post("/admin/usuario/autenticacao",(req,res)=>{
                     email:usuario.email
                 }
                 res.redirect("/admin/usuarios")
+            }else{
+                res.redirect("/admin/usuario/login")
             }
         }else{
             res.redirect("/admin/usuario/login")
@@ -64,7 +66,7 @@ router.post("/admin/usuario/autenticacao",(req,res)=>{
     })
 })
 
-router.get("/admin/usuario/deletar",(req,res)=>{
+router.get("/admin/usuario/deletar",adminAuth,(req,res)=>{
     Usuario.findOne({
         where:{email:req.session.usuario.email}
     }).then(usuario=>{
@@ -72,7 +74,7 @@ router.get("/admin/usuario/deletar",(req,res)=>{
     })
 })
 
-router.post("/admin/usuario/deletar/conta",(req,res)=>{
+router.post("/admin/usuario/deletar/conta",adminAuth,(req,res)=>{
     let id = req.body.id 
     let senha = req.body.senha
 
@@ -96,4 +98,49 @@ router.post("/admin/usuario/deletar/conta",(req,res)=>{
     })
 })
 
+router.get("/admin/usuario/atualizar",(req,res)=>{
+    Usuario.findOne({
+        where:{email:req.session.usuario.email}
+    }).then(usuario=>{
+        res.render("admin/usuarios/atualizar",{usuario:usuario})
+    })
+})
+
+router.get("/admin/usuario/atualizar/senha_",(req,res)=>{
+    Usuario.findOne({
+        where:{email:req.session.usuario.email}
+    }).then(usuario=>{
+        res.render("admin/usuarios/atualizarSenha",{usuario:usuario})
+    })
+})
+
+router.post("/admin/usuario/atualizar/senha",(req,res)=>{
+    let senha1 = req.body.senha1
+    let senha2 = req.body.senha2
+    let id = req.body.id
+    let senhaFinal = ""
+
+    if(senha1==senha2){
+        Usuario.findByPk(id).then(usuario=>{
+        let senha = req.body.senha 
+        let correto = bcryptjs.compareSync(senha,usuario.senha)
+            if(correto){
+                senhaFinal = senha1
+                let salt = bcryptjs.genSaltSync(10)
+                let hash = bcryptjs.hashSync(senhaFinal,salt)
+                Usuario.update({
+                    senha:hash
+                },{where:{id:id}}).then(()=>{
+                    res.redirect("/admin/usuarios")
+                })
+            }else{
+                res.redirect("/admin/usuario/atualizar/senha_")
+            }
+        }).catch(()=>{
+            res.redirect("/admin/usuarios")
+        })
+    }else{
+        res.redirect("/admin/usuarios")
+    }
+})
 module.exports = router
