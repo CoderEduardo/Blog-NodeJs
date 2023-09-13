@@ -23,7 +23,7 @@ app.use(session({
 app.get("/", (req, res) => {
     Artigo.findAll({limit:4,order:[['id',"DESC"]]}).then(artigos=>{
         Categoria.findAll().then(categorias=>{
-            res.render("index", { artigos: artigos, categorias: categorias })
+            res.render("index", { artigos: artigos, categorias: categorias, logado:req.session.usuario })
         })
     })
 })
