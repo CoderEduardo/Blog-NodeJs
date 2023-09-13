@@ -1,0 +1,31 @@
+<%- include("../../partials/header.ejs") %>
+
+    <body>
+        <%- include("../../partials/navbar.ejs") %>
+
+            <div class="container">
+                <hr>
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h2>Atualizar Email</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/admin/usuario/atualizar/email">
+                            <h4>Esse é o seu email atual:</h4>
+                            <p><%= usuario.email %></p>
+                            <hr>
+                            <h4>Mudar email:</h4>
+                            <input type="hidden" name="id" value="<%= usuario.id %>">
+                            <input type="text" name="email" class="form-control" placeholder="Digite seu novo email:">
+                            <br>
+                            <hr>
+                            <h4>Para confirmar a atualização digite a sua senha atual:</h4>
+                            <input type="password" name="senha" class="form-control">
+                            <button class="btn btn btn-success mt-3">Atualizar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </body>
+
+    <%- include("../../partials/footer.ejs") %>
