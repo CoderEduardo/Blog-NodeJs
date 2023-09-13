@@ -10,13 +10,15 @@
                 Home
             </a>
         </li>
-       
+
+        <% categorias.forEach(categoria=> {%>
             <li class="nav-item">
-                <a href="" class="nav-link">
-                   
+                <a href="/categorias/<%= categoria.slug %>" class="nav-link">
+                    <%= categoria.titulo %>
                 </a>
             </li>
-           
+
+         <% }); %>
 
 
     </ul>
