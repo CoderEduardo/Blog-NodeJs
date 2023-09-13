@@ -64,4 +64,36 @@ router.post("/admin/usuario/autenticacao",(req,res)=>{
     })
 })
 
+router.get("/admin/usuario/deletar",(req,res)=>{
+    Usuario.findOne({
+        where:{email:req.session.usuario.email}
+    }).then(usuario=>{
+        res.render("admin/usuarios/deletar",{usuario:usuario})
+    })
+})
+
+router.post("/admin/usuario/deletar/conta",(req,res)=>{
+    let id = req.body.id 
+    let senha = req.body.senha
+
+    Usuario.findByPk(id).then(usuario=>{
+        if(usuario != undefined){
+            let correto = bcryptjs.compareSync(senha,usuario.senha)
+            if(correto){
+                Usuario.destroy({
+                    where:{id:id}
+                }).then(()=>{
+                    res.redirect("/admin/usuarios")
+                }).catch(()=>{
+                    res.redirect("/admin/usuarios")
+                })
+            }else{
+                res.redirect("/admin/usuarios")
+            }
+        }else{
+            res.redirect("/admin/usuarios")
+        }
+    })
+})
+
 module.exports = router
