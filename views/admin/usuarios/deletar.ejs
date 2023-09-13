@@ -1,0 +1,28 @@
+<%- include("../../partials/header.ejs") %>
+
+    <body>
+        <%- include("../../partials/navbar.ejs") %>
+
+            <div class="container">
+                <hr>
+                <div class="card mt-5">
+                    <div class="card-header">
+                        <h2>Deletar o meu Usuário</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/admin/usuario/deletar/conta">
+                           <h4>Deletar minha conta:</h4>
+                            <p><%= usuario.email %></p>
+                            <input type="hidden" value="<%= usuario.id %>" name="id">
+                            <h4>Para deletar a sua conta vinculada a esse email digite sua senha:</h4>
+                            <input type="text" placeholder="Digite a sua senha" name="senha" class="form-control">
+                            <div class="d-grid mt-3">
+                                <button type="submit" class="btn btn-danger btn-block">Deletar</button>
+                           </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </body>
+
+    <%- include("../../partials/footer.ejs") %>
