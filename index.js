@@ -35,7 +35,7 @@ app.get("/:slug", (req, res) => {
             where: { slug: slug }
         }).then(artigo => {
             if (artigo != undefined) {
-                res.render("article", { artigo: artigo, categorias: categorias })
+                res.render("article", { artigo: artigo, categorias: categorias,logado:req.session.usuario })
             } else {
                 res.redirect("/")
             }
@@ -51,7 +51,7 @@ app.get("/categorias/:slug", (req, res) => {
         include: [{ model: Artigo }]
     }).then(categoria => {
         Categoria.findAll().then(categorias => {
-            res.render("index", { artigos: categoria.artigos, categorias: categorias })
+            res.render("index", { artigos: categoria.artigos, categorias: categorias,logado:req.session.usuario })
         })
     })
 
