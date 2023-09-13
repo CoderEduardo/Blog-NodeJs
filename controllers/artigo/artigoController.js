@@ -3,8 +3,9 @@ const router = express.Router()
 const Categoria = require("../categoria/Categoria")
 const Artigo = require("./Artigo")
 const slugify = require("slugify")
+const adminAuth = require("../../middlewares/adminAuth")
 
-router.get("/admin/artigos", (req, res) => {
+router.get("/admin/artigos",adminAuth, (req, res) => {
     Artigo.findAll({
         include: [{ model: Categoria }]
     }).then(artigos => {
@@ -12,7 +13,7 @@ router.get("/admin/artigos", (req, res) => {
     })
 })
 
-router.get("/admin/artigos/novo", (req, res) => {
+router.get("/admin/artigos/novo",adminAuth, (req, res) => {
     Categoria.findAll().then(categorias => {
         res.render("admin/artigos/new", {
             categorias: categorias
@@ -20,7 +21,7 @@ router.get("/admin/artigos/novo", (req, res) => {
     })
 })
 
-router.post("/admin/artigos/salvar", (req, res) => {
+router.post("/admin/artigos/salvar",adminAuth, (req, res) => {
     let titulo = req.body.titulo
     let conteudo = req.body.conteudo
     let categoria = req.body.categoria
@@ -35,7 +36,7 @@ router.post("/admin/artigos/salvar", (req, res) => {
     })
 })
 
-router.post("/admin/artigos/deletar", (req, res) => {
+router.post("/admin/artigos/deletar",adminAuth, (req, res) => {
     let id = req.body.id
     Artigo.destroy({
         where: { id: id }
@@ -44,7 +45,7 @@ router.post("/admin/artigos/deletar", (req, res) => {
     })
 })
 
-router.get("/admin/artigos/atualizar/:id", (req, res) => {
+router.get("/admin/artigos/atualizar/:id",adminAuth, (req, res) => {
     let id = req.params.id
 
     Artigo.findByPk(id).then(artigo => {
@@ -54,7 +55,7 @@ router.get("/admin/artigos/atualizar/:id", (req, res) => {
     })
 })
 
-router.post("/admin/artigos/atualizar", (req, res) => {
+router.post("/admin/artigos/atualizar",adminAuth, (req, res) => {
     let titulo = req.body.titulo
     let conteudo = req.body.conteudo
     let categoria = req.body.categoria
@@ -72,7 +73,7 @@ router.post("/admin/artigos/atualizar", (req, res) => {
     })
 })
 
-router.get("/artigos/page/:num", (req, res) => {
+router.get("/artigos/page/:num",adminAuth, (req, res) => {
     let page = req.params.num
     let offset = 0
 
