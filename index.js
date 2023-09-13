@@ -6,12 +6,19 @@ const connection = require("./database/database")
 connection.authenticate().then(() => { console.log("Banco de dados conectado com sucesso") }).catch(erro => { console.log(`Ocorreu um erro: ${erro}`) })
 const Categoria = require("./controllers/categoria/Categoria")
 const Artigo = require("./controllers/artigo/Artigo")
+const Usuario = require("./controllers/usuario/Usuario")
 const categoriaController = require("./controllers/categoria/categoriaController")
 const artigoController = require("./controllers/artigo/artigoController")
+const usuarioController = require("./controllers/usuario/usuarioController")
+const session = require("express-session")
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static("public"))
 app.set("view engine", 'ejs')
+app.use(session({
+    secret:"bananna",
+    cookie:{maxAge:(60 * 1000) * 30}
+}))
 
 app.get("/", (req, res) => {
     Artigo.findAll({limit:4,order:[['id',"DESC"]]}).then(artigos=>{
@@ -50,8 +57,11 @@ app.get("/categorias/:slug", (req, res) => {
 
 })
 
+
+
 app.use("/", categoriaController)
 app.use("/", artigoController)
+app.use("/",usuarioController)
 
 app.listen(PORTA, () => {
     console.log(`Servidor Rodando na porta ${PORTA}`)
