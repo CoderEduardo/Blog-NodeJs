@@ -14,8 +14,8 @@ app.use(express.static("public"))
 app.set("view engine", 'ejs')
 
 app.get("/", (req, res) => {
-    Categoria.findAll().then(categorias => {
-        Artigo.findAll().then(artigos => {
+    Artigo.findAll({limit:4,order:[['id',"DESC"]]}).then(artigos=>{
+        Categoria.findAll().then(categorias=>{
             res.render("index", { artigos: artigos, categorias: categorias })
         })
     })
@@ -28,7 +28,7 @@ app.get("/:slug", (req, res) => {
             where: { slug: slug }
         }).then(artigo => {
             if (artigo != undefined) {
-                res.render("article", { artigo: artigo,categorias:categorias })
+                res.render("article", { artigo: artigo, categorias: categorias })
             } else {
                 res.redirect("/")
             }
@@ -36,15 +36,15 @@ app.get("/:slug", (req, res) => {
     })
 })
 
-app.get("/categorias/:slug",(req,res)=>{
+app.get("/categorias/:slug", (req, res) => {
     let slug = req.params.slug
 
     Categoria.findOne({
-        where:{slug:slug},
-        include:[{model:Artigo}]
-    }).then(categoria=>{
-        Categoria.findAll().then(categorias=>{
-            res.render("index",{artigos:categoria.artigos,categorias:categorias})
+        where: { slug: slug },
+        include: [{ model: Artigo }]
+    }).then(categoria => {
+        Categoria.findAll().then(categorias => {
+            res.render("index", { artigos: categoria.artigos, categorias: categorias })
         })
     })
 

@@ -61,14 +61,50 @@ router.post("/admin/artigos/atualizar", (req, res) => {
     let id = req.body.id
 
     Artigo.update({
-        titulo:titulo,
-        slug:slugify(titulo),
-        conteudo:conteudo,
-        categoriaId:categoria
-    },{
-        where:{id:id}
-    }).then(()=>{
+        titulo: titulo,
+        slug: slugify(titulo),
+        conteudo: conteudo,
+        categoriaId: categoria
+    }, {
+        where: { id: id }
+    }).then(() => {
         res.redirect("/admin/artigos")
+    })
+})
+
+router.get("/artigos/page/:num", (req, res) => {
+    let page = req.params.num
+    let offset = 0
+
+    if (isNaN(page) || page == 1) {
+        offset = 0
+    } else {
+        offset = (parseInt(page) - 1) * 4
+    }
+
+    Artigo.findAndCountAll({
+        limit: 4,
+        offset: offset,
+        order: [['id', 'DESC']]
+    }).then(artigos => {
+
+        let next = false
+        if (offset + 4 >= artigos.count) {
+            next = false
+        } else {
+            next = true
+        }
+
+        let resultado = {
+            next: next,
+            page: parseInt(page),
+            artigos: artigos
+        } 
+
+        Categoria.findAll().then(categorias => {
+            res.render("admin/artigos/page", { resultado: resultado, categorias: categorias })
+        })
+
     })
 })
 
