@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark navbar-expand-lg bg-primary" style="margin-bottom: 25px;">
-    <a href="" class="navbar-brand">
+    <a href="/" class="navbar-brand">
         Guia Press
     </a>
 
@@ -10,13 +10,15 @@
                 Home
             </a>
         </li>
-       
+
+        <% categorias.forEach(categoria=> {%>
             <li class="nav-item">
-                <a href="" class="nav-link">
-                   
+                <a href="/categorias/<%= categoria.slug %>" class="nav-link">
+                    <%= categoria.titulo %>
                 </a>
             </li>
-           
+
+         <% }); %>
 
 
     </ul>

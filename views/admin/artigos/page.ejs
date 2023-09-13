@@ -7,23 +7,31 @@
                
 
          
-                    <div class="card">
+                    <% resultado.artigos.rows.forEach(artigo => {%>
+                        <div class="card">
                         <div class="card-header">
                             <h2>
-                         
+                                <%= artigo.titulo %>
                             </h2>
                         </div>
                         <div class="card-body">
-                            <a href="" class="btn btn-success">Ler Artigo</a>
+                            <a href="/<%= artigo.slug %>" class="btn btn-success">Ler Artigo</a>
                         </div>
                     </div><br>
+                   <%  });  %>
                  
 
                     
                     <div class="row">
                         <div class="col col-12">
-
-                         
+                            <% if (resultado.page == 1) {%> 
+                                 <a style="display: none; float: left;" href="/artigos/page/<%= resultado.page - 1 %>"> <<< Prev</a>  
+                           <%  } else{ %>
+                            <a style="float: left;" href="/artigos/page/<%= resultado.page - 1 %>"> <<< Prev</a>
+                        <% } %>
+                       <% if(resultado.next){%>
+                         <a style="float: right;" href="/artigos/page/<%= resultado.page + 1 %>">Next >>></a> 
+                      <% } %>
                         </div>
                         <hr>
                     </div>
