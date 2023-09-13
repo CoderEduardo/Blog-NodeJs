@@ -57,6 +57,11 @@ app.get("/categorias/:slug", (req, res) => {
 
 })
 
+app.get("/logout/sair",(req,res)=>{
+    req.session.usuario = undefined
+    res.redirect("/")
+})
+
 
 
 app.use("/", categoriaController)
