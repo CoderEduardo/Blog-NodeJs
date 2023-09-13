@@ -9,6 +9,7 @@ const Artigo = require("./controllers/artigo/Artigo")
 const Usuario = require("./controllers/usuario/Usuario")
 const categoriaController = require("./controllers/categoria/categoriaController")
 const artigoController = require("./controllers/artigo/artigoController")
+const usuarioController = require("./controllers/usuario/usuarioController")
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static("public"))
@@ -53,6 +54,7 @@ app.get("/categorias/:slug", (req, res) => {
 
 app.use("/", categoriaController)
 app.use("/", artigoController)
+app.use("/",usuarioController)
 
 app.listen(PORTA, () => {
     console.log(`Servidor Rodando na porta ${PORTA}`)
